@@ -1,0 +1,104 @@
+{% extends "index.html" %}
+{% block content %}
+
+<center>
+    <div style="height:100px;"></div>
+  {% for img in imgs %}
+    <img src="{{ img.image.url }}" style="width:70%; height:55%;" alt="">
+  {% endfor %}
+<div style=" width:100%; margin:0 auto; ">
+    <h3>Comments:</h3>
+    <hr style="width:70%;">
+     <div style="width:100%;">
+        {% for comment in page_obj %}
+            {% if comment.parent_comment_id == None %}
+         <div style="width:70%; background-color:#D3D3D3;">
+             <a style="color :black;" href="javascript:replyClick({{ comment.id }});">
+              <div style="  height : 37 px; margin-top : 9px;font-size:1.3em; display: inline-block;float:left;">{{ comment.name }} ({{comment.ip}})</div>
+             <div style=" height : 37 px; margin-top : 9px; font-size:1.3em;display: inline-block;float:none;">{{ comment.content }}</div>
+             <div style="  height : 37 px; margin-top : 9px; font-size:1.3em;display: inline-block;float:right;">{{comment.make_date }}&nbsp </div>
+            </a>
+             {% endif %}
+             {% for recomment in recomments %}
+                {% if recomment.parent_comment_id == comment.id %}
+                <div style="width:97%; float:right; background-color:#DDDDDD">
+                    <div style=" height : 37 px; margin-top : 9px;font-size:1.3em;display: inline-block;float:left;"><span style="color:blue; font-weight: bold ;">ㄴ</span>{{ recomment.name }}:({{recomment.ip}})</div>
+                    <div style="height : 37 px; margin-top : 9px;font-size:1.3em;display: inline-block;float:none;">{{ recomment.content }}</div>
+                    <div style="height : 37 px; margin-top : 9px;font-size:1.3em;display: inline-block;float:right;">{{ recomment.make_date }}&nbsp </div>
+                 </div>
+                {% endif %}
+
+             {% endfor %}
+             {% if comment.parent_comment_id == None %}
+             <div id="{{comment.id}}" style=" display:none;">
+                 <form action="" method="post">
+                     {% csrf_token %}
+                     <input type="hidden" name="parent_comment_id" value="{{comment.id}}">
+                     <div class="input-group mb-3 mt-3" style="width:95%">
+                <span class="input-group-text" id="inputGroup-sizing-default">이름</span>
+                <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="form-floating" style="width:95%;">
+                <textarea  name="content" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Comments</label>
+            </div>
+
+            <button type="submit" style="width:30%;" class="mt-3 mb-3 btn btn-info btn-lg">입력</button>
+                 </form>
+             </div>
+             <hr style="width:70%;">
+             {% endif %}
+
+         </div>
+
+        {% endfor %}
+    </div>
+    <div class="paging">
+                {% if page_obj.has_previous %}
+                <a style="text-decoration: none;" href="?commentnum={{ page_obj.previous_page_number }}" class="bt">이전 댓글</a>
+                {% endif %}
+                <a style="text-decoration: none;"href="#" class="num">{{ page_obj.number }}</a>
+                {% if page_obj.has_next %}
+                <a style="text-decoration: none;"href="?commentnum={{ page_obj.next_page_number }}" class="bt">다음 댓글</a>
+                {% endif %}
+
+            </div>
+<h3 style="width:70%; margin-top:12px; border-top:2px solid #525eaa;">Leave a comment:</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div style="width:70%;border-bottom:2px solid #525eaa; margin-bottom:10px;">
+            <div class="input-group mb-3" style="width:95%">
+                <span class="input-group-text" id="inputGroup-sizing-default">이름</span>
+                <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="form-floating" style="width:95%;">
+                <textarea  name="content" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Comments</label>
+            </div>
+
+            <button type="submit" style="width:30%;" class="mt-3 mb-3 btn btn-info btn-lg">입력</button>
+
+
+        </div>
+    </form>
+
+
+ </div>
+</center>
+{% endblock%}
+
+
+{% block js %}
+
+<script>
+function replyClick(test_obj){
+        var con = document.getElementById(test_obj);
+        con.style.display = "block";
+    }
+  document.addEventListener("DOMContentLoaded", function (event) {
+     navActivePage();
+  });
+</script>
+{% endblock %}

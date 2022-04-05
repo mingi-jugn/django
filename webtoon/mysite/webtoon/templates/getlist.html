@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% block content %}
+<section>
+    <center>
+        <div style="width: 80%; ">
+            <div class="mt-3 mb-2 bg-secondary p-2 text-white"><p style="display: inline-block;float:left;">작가 고유번호</p>
+            <p style="display: inline-block;float:none;">작가</p>
+            <p style="display: inline-block;float:right;">후원</p></div>
+            {% for list in page_list %}
+            <a href="{% url 'detail' list.pk %}">
+        <div class="mt-2 bg-secondary p-2 text-dark bg-opacity-50"><p style="display: inline-block;float:left;">{{ list.user_id }}</p>
+            <p style="display: inline-block;float:none;">{{ list.name }}</p>
+            <p style="display: inline-block;float:right;">{{ list.support }}</p>
+            </div></a>
+            {% endfor %}
+    </div>
+    </center>
+
+</section>
+{% endblock %}

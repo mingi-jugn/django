@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+{% block content %}
+
+
+
+  <section class="py-5 text-center container">
+    {{ webtoon }}
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        {% if user.is_authenticated %}
+        <h1 style="display:inline;" class="fw-light">카툰 베스트</h1><p style="font-size: 1.5rem; display:inline;">  ({{ user.get_username }})님</p>
+        {% else %}
+        <h1 class="fw-light">카툰 베스트</h1>
+        {% endif %}
+        <p class="mt-3 lead text-muted">만화란 고대 역사 전달 방법의 유일한 끈이라고 믿습니다. 이집트인은 벽에 그림을 그렸습니다. 세계 많은 나라가 지금도 그림으로 지식을 전달합니다. 만화도 누군가의 느낌과 경험이 함축되어 있습니다. 그런데 그런 경험과 역사가 상술이란 미명하에 색깔이 입혀지고 수정된 후 만화가 되어 팔려나간 거죠.</p>
+        <p>
+          <a href="{% url 'write' %}" class="btn btn-primary my-2">만화 업로드</a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="btn btn-secondary my-2">로그아웃</a>
+          {% else %}
+          <a href="{% url 'login' %}" class="btn btn-secondary my-2">로그인</a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+
+{% endblock %}

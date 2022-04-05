@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% block content %}
+
+
+  <section style="width:50%;" class="py-5 text-center container">
+    <form method="POST">
+       {% csrf_token %}
+    <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">ID 입력 :</span>
+  </div>
+  <input name="username" type="text" class="form-control">
+</div>
+
+
+     <div class="mt-2 input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">PW 입력:</span>
+  </div>
+  <input name="password1" type="password" class="form-control">
+</div>
+
+   <div class="mt-2 input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">PW 재입력:</span>
+  </div>
+  <input name="password2" type="password" class="form-control">
+</div>
+
+        <div class="mt-2 input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">이메일 입력:</span>
+  </div>
+  <input  name="email"  type="email" class="form-control">
+</div>
+
+<div class="mt-2 d-grid gap-2 col-6 mx-auto">
+  <button class="btn btn-primary" type="submit">회원가입</button>
+  <button class=" mt-3 btn btn-primary" type="button" onclick="location.href='{% url 'mainpage' %}'">돌아가기</button>
+</div>
+    </form>
+  </section>
+
+
+
+{% endblock %}
